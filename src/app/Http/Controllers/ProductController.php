@@ -31,8 +31,7 @@ class ProductController extends Controller
         if ($p !== null) {
             $products->where('products.name', 'LIKE BINARY', '%' . $p . '%');
         }
-
-        $products = $products->get();
+        $products = $products->SortOrder($request->sort_order)->paginate(6);
 
         return view('index', compact('products', 'p'));
     }
@@ -48,7 +47,7 @@ class ProductController extends Controller
     // 商品登録
     public function store(StoreProductRequest $request)
     {
-        $file_name = $request->file('image')->getClientOriginalName();
+        $file_name = $request->file('image')->getClientOriginalNakme();
         // 取得したファイル名で保存
         // storage/app/public/任意のディレクトリ名/
         $request->file('image')->storeAs('public/sample', $file_name);
