@@ -60,6 +60,13 @@ class ProductController extends Controller
             'description' => $request->description,
         ]);
 
+        foreach ($request->seasons as $season) {
+            ProductSeason::create([
+                'product_id' => $product->id,
+                'season_id' => $season,
+            ]);
+        }
+
         return redirect('/products');
     }
 
@@ -77,13 +84,13 @@ class ProductController extends Controller
     {
         $item = Product::find($id);
 
-        if($request->image == null){
+        if ($request->image == null) {
             $item->update([
                 'name' => $request->name,
                 'price' => $request->price,
                 'description' => $request->description,
             ]);
-        }else{
+        } else {
             $file_name = $request->file('image')->getClientOriginalName();
             // 取得したファイル名で保存
             // storage/app/public/任意のディレクトリ名/
@@ -98,7 +105,7 @@ class ProductController extends Controller
 
         $item->productSeason()->delete();
 
-        foreach($request->seasons as $season){
+        foreach ($request->seasons as $season) {
             ProductSeason::create([
                 'product_id' => $item->id,
                 'season_id' => $season,
