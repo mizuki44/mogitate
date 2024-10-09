@@ -15,6 +15,7 @@
     <div class="separate__content">
         <div class="left__side">
             <div class="form__item">
+                <img src="{{ $product->image }}" alt="{{ $product->name }}" class="product__card--image">
 
                 <input type="file" name="image" id="image" /><br>
                 {{ csrf_field() }}
@@ -24,59 +25,59 @@
 
             </div>
         </div>
-        <div class="right__side">
-            <div class="form__item">
-                <p class="form__item--name">商品名</p>
-                <input class="form__input" type="text" name="name" placeholder="商品名を入力" value="{{ $product->name }}">
-                <div class="form__error">
-                    @error('name')
-                    {{ $message }}
-                    @enderror
-                </div>
-            </div>
-            <div class="form__item">
-                <p class="form__item--name">値段</p>
-                <input class="form__input" type="text" name="price" placeholder="値段を入力" value="{{ $product->price }}">
-                <div class="form__error">
-                    @error('price')
-                    {{ $message }}
-                    @enderror
-                </div>
-            </div>
-            <div class="form__item">
-                <p class="form__item--name">季節</p>
-                <div class="checkbox">
-                    @foreach($seasons as $season)
-                    <div class="appearance">
-                        <label class="form__checkbox--label" for="{{ $season->name }}">
-                            <input class="form__checkbox" type="checkbox" id="{{ $season->name }}" name="seasons[]" value="{{ $season->id }}"
-                                @if($product->is_season($season->id)) checked @endif>
-                            {{ $season->name }}
-                        </label>
+        <div class=" right__side">
+                <div class="form__item">
+                    <p class="form__item--name">商品名</p>
+                    <input class="form__input" type="text" name="name" placeholder="商品名を入力" value="{{ $product->name }}">
+                    <div class="form__error">
+                        @error('name')
+                        {{ $message }}
+                        @enderror
                     </div>
-                    @endforeach
                 </div>
-                <div class="form__error">
-                    @error('seasons')
-                    {{ $message }}
-                    @enderror
+                <div class="form__item">
+                    <p class="form__item--name">値段</p>
+                    <input class="form__input" type="text" name="price" placeholder="値段を入力" value="{{ $product->price }}">
+                    <div class="form__error">
+                        @error('price')
+                        {{ $message }}
+                        @enderror
+                    </div>
+                </div>
+                <div class="form__item">
+                    <p class="form__item--name">季節</p>
+                    <div class="checkbox">
+                        @foreach($seasons as $season)
+                        <div class="appearance">
+                            <label class="form__checkbox--label" for="{{ $season->name }}">
+                                <input class="form__checkbox" type="checkbox" id="{{ $season->name }}" name="seasons[]" value="{{ $season->id }}"
+                                    @if($product->is_season($season->id)) checked @endif>
+                                {{ $season->name }}
+                            </label>
+                        </div>
+                        @endforeach
+                    </div>
+                    <div class="form__error">
+                        @error('seasons')
+                        {{ $message }}
+                        @enderror
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="form__item">
-        <p class="form__item--name">商品説明</p>
-        <textarea class="form__textarea" name="description" placeholder="商品の説明を入力">{{ $product->description }}</textarea>
-        <div class="form__error">
-            @error('description')
-            {{ $message }}
-            @enderror
+        <div class="form__item">
+            <p class="form__item--name">商品説明</p>
+            <textarea class="form__textarea" name="description" placeholder="商品の説明を入力">{{ $product->description }}</textarea>
+            <div class="form__error">
+                @error('description')
+                {{ $message }}
+                @enderror
+            </div>
         </div>
-    </div>
-    <div class="form__button">
-        <button class="back__button" type="button" onclick="location.href='{{ route('products.index')}}'">戻る</button>
-        <button class="form__submit" type="submit">変更を保存</button>
-    </div>
+        <div class="form__button">
+            <button class="back__button" type="button" onclick="location.href='{{ route('products.index')}}'">戻る</button>
+            <button class="form__submit" type="submit">変更を保存</button>
+        </div>
 </form>
 <form class="delete__form" action="{{ route('products.destroy', ['product_id' => $product->id]) }}" method="post" enctype="multipart/form-data">
     @csrf

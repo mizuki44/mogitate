@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\ProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Models\ProductSeason;
 use App\Models\Season;
+use App\Http\Requests\StoreProductRequest;
 
 class ProductController extends Controller
 {
@@ -45,7 +46,7 @@ class ProductController extends Controller
     }
 
     // 商品登録
-    public function store(ProductRequest $request)
+    public function store(StoreProductRequest $request)
     {
         $file_name = $request->file('image')->getClientOriginalName();
         // 取得したファイル名で保存
@@ -72,21 +73,37 @@ class ProductController extends Controller
     }
 
     // 商品更新
-    public function update(ProductRequest $request, $id)
+    public function update(UpdateProductRequest $request, $id)
     {
-        $file_name = $request->file('image')->getClientOriginalName();
-        // 取得したファイル名で保存
-        // storage/app/public/任意のディレクトリ名/
-        $request->file('image')->storeAs('public/sample', $file_name);
+        $item = Product::find($id);
 
-        $form = $request->all();
+        if($request->image == null){
+            $item->update([
+                'name' => $request->name,
+                'price' => $request->price,
+                'description' => $request->description,
+            ]);
+        }else{
+            $file_name = $request->file('image')->getClientOriginalName();
+            // 取得したファイル名で保存
+            // storage/app/public/任意のディレクトリ名/
+            $request->file('image')->storeAs('public/sample', $file_name);
+            $item->update([
+                'name' => $request->name,
+                'price' => $request->price,
+                'image' => asset("storage/sample/{$file_name}"),
+                'description' => $request->description,
+            ]);
+        }
 
-        $item = Product::find($id)->update([
-            'name' => $request->name,
-            'price' => $request->price,
-            'image' => asset("storage/sample/{$file_name}"),
-            'description' => $request->description,
-        ]);
+        $item->productSeason()->delete();
+
+        foreach($request->seasons as $season){
+            ProductSeason::create([
+                'product_id' => $item->id,
+                'season_id' => $season,
+            ]);
+        }
 
         if ($item) {
             return redirect('/products');

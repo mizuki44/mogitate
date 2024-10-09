@@ -31,7 +31,6 @@
     <div class="form__item">
         <p class="form__item--name">商品画像<span class="required">必須</span></p>
         <div id="filePreview"></div>
-
         <div class="form__item">
 
             <input type="file" name="image" id="image" /><br>
