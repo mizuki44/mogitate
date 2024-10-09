@@ -16,8 +16,7 @@ class ProductController extends Controller
     public function index()
     {
         $p = '';
-        $products = Product::select('id', 'name', 'price', 'image')
-            ->paginate(6);
+        $products = Product::select('id', 'name', 'price', 'image')->paginate(6);
 
         return view('index', compact('products', 'p'));
     }
@@ -48,14 +47,19 @@ class ProductController extends Controller
     // 商品登録
     public function store(ProductRequest $request)
     {
+        $file_name = $request->file('image')->getClientOriginalName();
+        // 取得したファイル名で保存
+        // storage/app/public/任意のディレクトリ名/
+        $request->file('image')->storeAs('public/sample', $file_name);
+
         $product = product::create([
             'name' => $request->name,
             'price' => $request->price,
-            'image' => $request->image,
+            'image' => asset("storage/sample/{$file_name}"),
             'description' => $request->description,
         ]);
 
-        return redirect('index');
+        return redirect('/products');
     }
 
     // 商品詳細ページ表示

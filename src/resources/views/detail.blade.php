@@ -22,13 +22,6 @@
                 <p class='error_message'>{{$message}}</p>
                 @enderror
 
-                <!-- <input class="form__file" type="file" id="fileElem" name="image" accept="image/*">
-                <button class="form__file--button" type="button" id="fileSelect">ファイルを選択</button>
-                <div class="form__error">
-                    @error('image')
-                    {{ $message }}
-                    @enderror
-                </div> -->
             </div>
         </div>
         <div class="right__side">

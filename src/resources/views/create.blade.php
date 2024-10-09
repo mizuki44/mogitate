@@ -31,13 +31,17 @@
     <div class="form__item">
         <p class="form__item--name">商品画像<span class="required">必須</span></p>
         <div id="filePreview"></div>
-        <input class="form__file" type="file" id="fileElem" name="image" accept="image/*">
-        <button class="form__file--button" type="button" id="fileSelect">ファイルを選択</button>
-        <div class="form__error">
+
+        <div class="form__item">
+
+            <input type="file" name="image" id="image" /><br>
+            {{ csrf_field() }}
             @error('image')
-            {{ $message }}
+            <p class='error_message'>{{$message}}</p>
             @enderror
+
         </div>
+
     </div>
     <div class="form__item">
         <p class="form__item--name">季節<span class="required">必須</span><span class="multiple">複数選択可</span></p>

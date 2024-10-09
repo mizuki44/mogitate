@@ -47,6 +47,14 @@
         </div>
         @endforeach
     </div>
+
+    {{ $products
+            ->appends([
+                'keyword' => \Request::get('keyword'),
+                'sort_order' => \Request::get('sort_order'),
+                ])
+            ->links() }}
 </div>
 </div>
+
 @endsection
