@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use SebastianBergmann\CodeCoverage\Report\Xml\Project;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,5 +16,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(ProductsTableSeeder::class);
         $this->call(SeasonsTableSeeder::class);
+        $this->call(ProductSeasonTableSeeder::class);
     }
 }

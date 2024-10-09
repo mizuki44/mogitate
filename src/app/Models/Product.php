@@ -24,7 +24,7 @@ class Product extends Model
     //受け取ったseason_idを選択しているか判定
     public function is_season($season_id)
     {
-        // return $this->product Season()->where('season_id', $season_id)->exists();
+        return $this->productSeason()->where('season_id', $season_id)->exists();
     }
 
     // キーワード検索
@@ -46,6 +46,4 @@ class Product extends Model
         //     }
         // }
     }
-
-
 }
