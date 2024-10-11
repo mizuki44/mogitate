@@ -5,77 +5,139 @@
 @endsection
 
 @section('content')
-<form class="create__form" action="{{ route('products.create') }}" method="post" enctype="multipart/form-data">
-    @csrf
-    <div class="form__title">
-        <h2>商品登録</h2>
-    </div>
-    <div class="form__item">
-        <p class="form__item--name">商品名<span class="required">必須</span></p>
-        <input class="form__input" type="text" name="name" placeholder="商品名を入力" value="{{ old('name') }}">
-        <div class="form__error">
-            @error('name')
-            {{ $message }}
-            @enderror
+<div class="main__area__inner">
+    <form class="create__form" action="{{ route('products.create') }}" method="post" enctype="multipart/form-data">
+        @csrf
+        <div class="form__title">
+            <h2>商品登録</h2>
         </div>
-    </div>
-    <div class="form__item">
-        <p class="form__item--name">値段<span class="required">必須</span></p>
-        <input class="form__input" type="text" name="price" placeholder="値段を入力" value="{{ old('price') }}">
-        <div class="form__error">
-            @error('price')
-            {{ $message }}
-            @enderror
-        </div>
-    </div>
-    <div class="form__item">
-        <p class="form__item--name">商品画像<span class="required">必須</span></p>
-        <div id="filePreview"></div>
         <div class="form__item">
-
-            <input type="file" name="image" id="image" /><br>
-            {{ csrf_field() }}
-            @error('image')
-            <p class='error_message'>{{$message}}</p>
-            @enderror
-
-        </div>
-
-    </div>
-    <div class="form__item">
-        <p class="form__item--name">季節<span class="required">必須</span><span class="multiple">複数選択可</span></p>
-        <div class="checkbox">
-            @foreach($seasons as $season)
-            <div class="appearance">
-                <label class="form__checkbox--label" for="{{ $season->name }}">
-                    <input class="form__checkbox" type="checkbox" id="{{ $season->name }}" name="seasons[]" value="{{ $season->id }}"
-                        {{ !empty(old('seasons')) && in_array((string)$season->id, old('seasons'), true) ? 'checked' : ''}}>
-                    {{ $season->name }}
-                </label>
+            <p class="form__item--name">商品名<span class="required">必須</span></p>
+            <input class="form__input" type="text" name="name" placeholder="商品名を入力" value="{{ old('name') }}">
+            <div class="form__error">
+                @error('name')
+                {{ $message }}
+                @enderror
             </div>
-            @endforeach
         </div>
-        <div class="form__error">
-            @error('seasons')
-            {{ $message }}
-            @enderror
+        <div class="form__item">
+            <p class="form__item--name">値段<span class="required">必須</span></p>
+            <input class="form__input" type="text" name="price" placeholder="値段を入力" value="{{ old('price') }}">
+            <div class="form__error">
+                @error('price')
+                {{ $message }}
+                @enderror
+            </div>
         </div>
-    </div>
-    <div class="form__item">
-        <p class="form__item--name">商品説明<span class="required">必須</span></p>
-        <textarea class="form__textarea" name="description" placeholder="商品の説明を入力">{{ old('description') }}</textarea>
-        <div class="form__error">
-            @error('description')
-            {{ $message }}
-            @enderror
-        </div>
-    </div>
-    <div class="form__button">
-        <button class="back__button" type="button" onclick="location.href='{{ route('products.index') }}'">戻る</button>
-        <button class="form__submit" type="submit">登録</button>
-    </div>
-</form>
+        <div class="form__item">
+            <p class="form__item--name">商品画像<span class="required">必須</span></p>
+            <div class="form__item">
+                <div id="preview" class="product__card--image"></div>
+                <input type="file" name="image" class="product__card--image" id="inputElm" /><br>
+                {{ csrf_field() }}
+                @error('image')
+                <div class="form__error">{{$message}}</div>
+                @enderror
+            </div>
+            <script>
+                const inputElm = document.getElementById('inputElm');
+                inputElm.addEventListener('change', (e) => {
+                    const file = e.target.files[0];
 
-<script src="{{ asset('js/input-file.js') }}"></script>
+                    const fileReader = new FileReader();
+                    // 画像を読み込む
+                    fileReader.readAsDataURL(file);
 
+                    // 画像読み込み完了時の処理
+                    fileReader.addEventListener('load', (e) => {
+                        // imgタグ生成
+                        const imgElm = document.createElement('img');
+                        imgElm.className = 'product__card--image';
+                        imgElm.src = e.target.result; // e.target.resultに読み込んだ画像のURLが入っている
+
+                        // imgタグを挿入
+                        const targetElm = document.getElementById('preview');
+                        const previewText = document.createElement('p');
+                        previewText.textContent = '画像プレビュー';
+                        previewText.className = 'preview'
+                        targetElm.appendChild(previewText); // 文字を追加
+                        targetElm.appendChild(imgElm);
+                    });
+                });
+            </script>
+
+
+            <!-- <div class="fileview">
+                <div class="set">
+                    <input accept="image/*" id="item" type="file">
+                </div>
+                <div class="text">
+                    画像ファイルを選択してアップロード
+                </div>
+            </div>
+            <div class="preview">
+            </div>
+            画像を入れるためのdiv要素
+            <div id="preview" style="width: 300px;"></div>
+            <input id="inputElm" type="file">
+            <script>
+                const inputElm = document.getElementById('inputElm');
+                inputElm.addEventListener('change', (e) => {
+                    const file = e.target.files[0];
+
+                    const fileReader = new FileReader();
+                    // 画像を読み込む
+                    fileReader.readAsDataURL(file);
+
+                    // 画像読み込み完了時の処理
+                    fileReader.addEventListener('load', (e) => {
+                        // imgタグ生成
+                        const imgElm = document.createElement('img');
+                        imgElm.src = e.target.result; // e.target.resultに読み込んだ画像のURLが入っている
+
+                        // imgタグを挿入
+                        const targetElm = document.getElementById('preview');
+                        targetElm.appendChild(imgElm);
+                    });
+                });
+            </script> -->
+
+
+
+        </div>
+        <div class="form__item">
+            <p class="form__item--name">季節<span class="required">必須</span><span class="multiple">複数選択可</span></p>
+            <div class="checkbox">
+                @foreach($seasons as $season)
+                <div class="appearance">
+                    <label class="form__checkbox--label" for="{{ $season->name }}">
+                        <input class="form__checkbox" type="checkbox" id="{{ $season->name }}" name="seasons[]" value="{{ $season->id }}"
+                            {{ !empty(old('seasons')) && in_array((string)$season->id, old('seasons'), true) ? 'checked' : ''}}>
+                        {{ $season->name }}
+                    </label>
+                </div>
+                @endforeach
+            </div>
+            <div class="form__error">
+                @error('seasons')
+                {{ $message }}
+                @enderror
+            </div>
+        </div>
+        <div class="form__item">
+            <p class="form__item--name">商品説明<span class="required">必須</span></p>
+            <textarea class="form__textarea" name="description" placeholder="商品の説明を入力">{{ old('description') }}</textarea>
+            <div class="form__error">
+                @error('description')
+                {{ $message }}
+                @enderror
+            </div>
+        </div>
+        <div class="form__button">
+            <button class="back__button" type="button" onclick="location.href='{{ route('products.index') }}'">戻る</button>
+            <button class="form__submit" type="submit">登録</button>
+        </div>
+    </form>
+    <script src="{{ asset('js/input-file.js') }}"></script>
+</div>
 @endsection

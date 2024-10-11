@@ -1,27 +1,27 @@
-body {
+.main__area {
     background-color: #f8f8f8;
-    margin-bottom: 50px;
+    padding-top: 40px;
 }
-
 /********** header **********/
-header {
+.header {
     background-color: #fff;
-    margin-bottom: 50px;
 }
 
 .header__title {
     max-width: 1200px;
     margin: auto;
+    padding-bottom: 5px;
+}
 
-    h1 {
-        padding: 20px;
-        margin: 0;
-    }
+.header__title_inner {
+    /* padding: 20px; */
+    margin: 0;
+    padding-left: 10px;
+}
 
-    a {
-        color: #f5c800;
-        font-family: "Homemade Apple", cursive;
-        font-weight: 400;
-        font-style: normal;
-    }
+.header__logo {
+    color: #f5c800;
+    font-family: "Kalam", cursive;
+    font-weight: 400;
+    font-style: normal;
 }

@@ -5,27 +5,29 @@
 @endsection
 
 @section('content')
-<form class="update__form" action="{{ route('products.update', ['product_id' => $product->id]) }}" method="post" enctype="multipart/form-data">
-    @csrf
-    @method('put')
-    <div class="form__link">
-        <a href="{{ route('products.index') }}">商品一覧</a>
-        <span>>{{ $product->name }}</span>
-    </div>
-    <div class="separate__content">
-        <div class="left__side">
-            <div class="form__item">
-                <img src="{{ $product->image }}" alt="{{ $product->name }}" class="product__card--image">
-
-                <input type="file" name="image" id="image" /><br>
-                {{ csrf_field() }}
-                @error('image')
-                <p class='error_message'>{{$message}}</p>
-                @enderror
-
-            </div>
+<div class="main__area__inner">
+    <form class="update__form" action="{{ route('products.update', ['product_id' => $product->id]) }}" method="post" enctype="multipart/form-data">
+        @csrf
+        @method('put')
+        <div class="form__link">
+            <a href="{{ route('products.index') }}" class="form__link--item">商品一覧</a>
+            <span>>{{ $product->name }}</span>
         </div>
-        <div class=" right__side">
+        <div class="separate__content">
+            <div class="left__side">
+                <div class="form__item">
+                    <img src="{{ $product->image }}" alt="{{ $product->name }}" class="product__card--image">
+                    <div id="preview" class="product__card--image"></div>
+                    <input type="file" name="image" id="inputElm" /><br>
+                    {{ csrf_field() }}
+                    <div class="form__error">
+                        @error('image')
+                        {{$message}}
+                        @enderror
+                    </div>
+                </div>
+            </div>
+            <div class="right__side">
                 <div class="form__item">
                     <p class="form__item--name">商品名</p>
                     <input class="form__input" type="text" name="name" placeholder="商品名を入力" value="{{ $product->name }}">
@@ -78,14 +80,43 @@
             <button class="back__button" type="button" onclick="location.href='{{ route('products.index')}}'">戻る</button>
             <button class="form__submit" type="submit">変更を保存</button>
         </div>
-</form>
-<form class="delete__form" action="{{ route('products.destroy', ['product_id' => $product->id]) }}" method="post" enctype="multipart/form-data">
-    @csrf
-    @method('delete')
-    <button class="delete__button" id="deleteBtn" type="submit"><i class="fa-regular fa-trash-can fa-2x"></i></button>
-</form>
+    </form>
+    <form class="delete__form" action="{{ route('products.destroy', ['product_id' => $product->id]) }}" method="post" enctype="multipart/form-data">
+        @csrf
+        @method('delete')
+        <button class="delete__button" id="deleteBtn" type="submit"><i class="fa-regular fa-trash-can fa-2x"></i></button>
+    </form>
+    <script src="{{ asset('js/input-file.js') }}"></script>
+    <script src="{{ asset('js/delete-confirmation.js') }}"></script>
+</div>
 
-<script src="{{ asset('js/input-file.js') }}"></script>
-<script src="{{ asset('js/delete-confirmation.js') }}"></script>
+<script>
+    const inputElm = document.getElementById('inputElm');
+    inputElm.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+
+        const fileReader = new FileReader();
+        // 画像を読み込む
+        fileReader.readAsDataURL(file);
+
+        // 画像読み込み完了時の処理
+        fileReader.addEventListener('load', (e) => {
+            // imgタグ生成
+            const imgElm = document.createElement('img');
+            imgElm.className = 'product__card--image';
+            imgElm.src = e.target.result; // e.target.resultに読み込んだ画像のURLが入っている
+            // imgタグを挿入
+            const targetElm = document.getElementById('preview');
+            const previewText = document.createElement('p');
+            previewText.textContent = '新規画像プレビュー';
+            previewText.className ='preview'
+            targetElm.appendChild(previewText); // 文字を追加
+
+
+
+            targetElm.appendChild(imgElm);
+        });
+    });
+</script>
 
 @endsection

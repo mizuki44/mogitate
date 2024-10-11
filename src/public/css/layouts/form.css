@@ -5,12 +5,10 @@
 
 .form__link {
     margin-bottom: 10px;
-
-    a {
-        color: #0085ff;
-    }
 }
-
+.form__link--item {
+    color: #0085ff;
+}
 .form__item {
     margin-bottom: 25px;
 }
@@ -81,6 +79,8 @@
     width: 20px;
     border: solid 1px #4b4b4b;
     border-radius: 50%;
+    margin-left: 10px;
+    vertical-align: middle;
 
     &:checked {
         background-color: #4b4b4b;
@@ -102,11 +102,6 @@
 
 .form__checkbox--label {
     text-align: center;
-
-    input {
-        margin-left: 10px;
-        vertical-align: middle
-    }
 }
 
 /********** form__submit,back_button **********/

@@ -2,11 +2,14 @@
 @import url("layouts/form.css");
 
 /********** main **********/
-main {
+/* .main__area {
+    background-color: #f8f8f8;
+} */
+.main__area__inner {
     max-width: 1200px;
     margin: auto;
+    padding-bottom: 50px;
 }
-
 /********** separate__content **********/
 .separate__content {
     width: 100%;
@@ -33,20 +36,20 @@ main {
     font-size: 20px;
 }
 
-.product__create--button {
+.product__create {
     transition-duration: .4s;
 
     &:hover {
         transform: scale(1.1);
     }
+}
 
-    a {
-        font-size: 16px;
-        padding: 10px 15px;
-        background-color: #ffa929;
-        border-radius: 5px;
-        font-weight: bold;
-    }
+.product__create--button {
+    font-size: 16px;
+    padding: 10px 15px;
+    background-color: #ffa929;
+    border-radius: 5px;
+    font-weight: bold;
 }
 
 /********** search__form **********/
@@ -61,6 +64,9 @@ main {
 .form__input {
     border-radius: 25px;
     margin-bottom: 20px;
+}
+.form__input::placeholder {
+    color: #e0dfde;
 }
 
 .select__wrapper {
@@ -79,6 +85,11 @@ main {
     }
 }
 
+
+
+
+
+
 .form__select {
     margin-bottom: 20px;
     -webkit-appearance: none;
@@ -95,19 +106,19 @@ main {
     border-radius: 25px;
     margin: 15px 0;
     padding: 0 10px;
+}
 
-    p {
-        margin: 0;
-    }
+.tag__form--sort {
+    margin: 0;
+}
 
-    button {
-        color: #f5c800;
-        background-color: #f8f8f8;
-        border: 1px solid #f5c800;
-        width: 25px;
-        height: 25px;
-        border-radius: 50%;
-    }
+.tag__form_button {
+    color: #f5c800;
+    background-color: #f8f8f8;
+    border: 1px solid #f5c800;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
 }
 
 /********** product__area **********/
@@ -128,15 +139,13 @@ main {
     &:hover {
         transform: scale(1.1);
     }
-
-    img {
-        width: 100%;
-        height: 250px;
-        object-fit: cover;
-        border-radius: 5px 5px 0 0;
-    }
 }
-
+.product__card--image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 5px 5px 0 0;
+}
 .product__card--info {
     padding: 0 10px;
     display: flex;

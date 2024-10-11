@@ -15,15 +15,17 @@
 </head>
 
 <body>
-    <header>
+    <header class="header">
         <div class="header__title">
-            <h1>
-                <a href="{{ route('products.index') }}">mogitate</a>
+            <h1 class="header__title_inner">
+                <a href="{{ route('products.index') }}" class="header__logo">mogitate</a>
             </h1>
         </div>
     </header>
     <main>
-        @yield('content')
+        <div class="main__area">
+            @yield('content')
+        </div>
     </main>
 </body>
 

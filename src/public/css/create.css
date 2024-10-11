@@ -1,9 +1,11 @@
 @import url("layouts/form.css");
 
 /********** main **********/
-main {
+.main__area__inner {
     max-width: 800px;
     margin: auto;
+    /* background-color: #f8f8f8; */
+    padding-bottom: 50px;
 }
 
 /********** create__form **********/
@@ -15,4 +17,15 @@ main {
 .back__button {
     width: 25%;
     margin: 0 10px;
+}
+
+.product__card--image {
+    width: 400px;
+    object-fit: fill;
+}
+
+.preview {
+    font-size: small;
+    margin: auto;
+    color: #0085ff;
 }
