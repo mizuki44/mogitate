@@ -46,8 +46,6 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         $file_name = $request->file('image')->getClientOriginalName();
-        // 取得したファイル名で保存
-        // storage/app/public/任意のディレクトリ名/
         $request->file('image')->storeAs('public/sample', $file_name);
 
         $product = product::create([
@@ -89,8 +87,6 @@ class ProductController extends Controller
             ]);
         } else {
             $file_name = $request->file('image')->getClientOriginalName();
-            // 取得したファイル名で保存
-            // storage/app/public/任意のディレクトリ名/
             $request->file('image')->storeAs('public/sample', $file_name);
             $item->update([
                 'name' => $request->name,
@@ -126,8 +122,6 @@ class ProductController extends Controller
             return redirect('/products/delete');
         }
     }
-
-
 }
 
 

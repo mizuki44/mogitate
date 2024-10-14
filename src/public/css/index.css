@@ -2,9 +2,6 @@
 @import url("layouts/form.css");
 
 /********** main **********/
-/* .main__area {
-    background-color: #f8f8f8;
-} */
 .main__area__inner {
     max-width: 1200px;
     margin: auto;
@@ -84,11 +81,6 @@
         pointer-events: none;
     }
 }
-
-
-
-
-
 
 .form__select {
     margin-bottom: 20px;
